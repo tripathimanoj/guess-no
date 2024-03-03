@@ -4,6 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
     <script>
         // JavaScript function to focus on the input box
         function focusInput() {
@@ -11,13 +56,21 @@
         }
     </script>
 </head>
-<body onload="focusInput()"> <!-- Call the focusInput function when the page loads -->
-    <h1>Welcome to the Guessing Game!</h1>
-    <p>Hey Guess the secret number between 1 and 100 in {{ max_tries }} tries.</p>
-    <form action="/guess" method="post">
-        <label for="guess">Enter your guess: </label>
-        <input type="number" id="guess" name="guess" autofocus required> <!-- Use autofocus attribute to focus on the input box -->
-        <button type="submit">Submit</button>
-    </form>
+<body>
+    <div class="container">
+        <h1>Welcome to the Guessing Game!</h1>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <p>Hey, can you guess the secret number between 1 and 100 in {{ max_tries }} tries?</p>
+        <form action="/guess" method="post">
+            <label for="guess">Enter your guess:</label>
+            <input type="number" name="guess" id="guess" min="1" max="100" required>
+            <input type="submit" value="Submit">
+        </form>
+        {% if tries_left %}
+            <p>You have {{ tries_left }} tries left.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
